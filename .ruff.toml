@@ -1,0 +1,20 @@
+line-length = 120
+indent-width = 4
+target-version = "py312"
+
+[lint]
+select = [
+  "E",   # pycodestyle
+  "F",   # pyflakes
+  "I",   # import sorting
+  "B",   # bugbear
+  "UP",  # pyupgrade
+]
+ignore = []
+
+fixable = ["ALL"]
+unfixable = []
+
+[lint.isort]
+known-first-party = ["app", "tests"]
+combine-as-imports = true

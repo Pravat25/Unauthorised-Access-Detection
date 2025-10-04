@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>Trained Models</h1>
+
+<table class="user-table">
+  <tr><th>Name</th><th>Accuracy</th><th>Last Trained</th><th>Actions</th></tr>
+  {% for it in items %}
+  <tr>
+    <td>{{ it.rec.name }}</td>
+    <td>{{ '%.2f'|format((it.rec.accuracy or 0) * 100) }}%</td>
+    <td>
+      {% if it.rec.trained_on %}
+        {{ it.rec.trained_on.strftime('%Y-%m-%d %H:%M') }}
+      {% else %} — {% endif %}
+    </td>
+    <td>
+      <a class="btn small" href="{{ url_for('admin_train') }}?model={{ it.rec.name }}">Retrain</a>
+      <a class="btn small danger" href="{{ url_for('delete_model', model_name=it.rec.name) }}">Delete</a>
+    </td>
+  </tr>
+  {% endfor %}
+</table>
+{% if not items %}
+<p class="muted">No models trained yet.</p>
+{% endif %}
+
+{% if items %}
+  <h2 style="margin-top:18px;">Artifacts</h2>
+  <div class="results-grid">
+    {% for it in items %}
+      <div class="metric">
+        <div class="metric-title">{{ it.rec.name|replace('-', ' ')|title }} – Confusion Matrix</div>
+        <div class="metric-value">
+          {% if it.conf_img %}
+            <img class="conf-matrix" src="{{ url_for('static', filename=it.conf_img) }}" alt="Training CM">
+          {% else %}
+            <span class="muted">No image saved yet.</span>
+          {% endif %}
+        </div>
+      </div>
+      <div class="metric">
+        <div class="metric-title">{{ it.rec.name|replace('-', ' ')|title }} – Feature Importance</div>
+        <div class="metric-value">
+          {% if it.feat_img %}
+            <img class="conf-matrix" src="{{ url_for('static', filename=it.feat_img) }}" alt="Feature importance">
+          {% else %}
+            <span class="muted">Not available for this model.</span>
+          {% endif %}
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+{% endif %}
+
+<a class="btn" href="{{ url_for('dashboard') }}">⬅ Back to Dashboard</a>
+{% endblock %}

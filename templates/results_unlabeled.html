@@ -1,0 +1,95 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>Threat Detection Results</h1>
+
+<div class="results-grid">
+  <div class="metric big">
+    <div class="metric-title">Predictions Generated</div>
+    <div class="metric-value">
+      <a class="btn primary" href="{{ url_for('download_report', filename=download_file) }}">Download CSV</a>
+    </div>
+    {% if model_name or row_count %}
+      <p class="muted smallnote">
+        {% if model_name %}<strong>Model:</strong> {{ model_name }}{% endif %}
+        {% if model_name and row_count %} • {% endif %}
+        {% if row_count %}<strong>Rows scored:</strong> {{ row_count }}{% endif %}
+      </p>
+    {% endif %}
+  </div>
+
+  {% if conf_bands %}
+  <div class="metric">
+    <div class="metric-title">Prediction Confidence Bands</div>
+    <div class="metric-value">
+      <div>High (≥0.9): <strong>{{ conf_bands.high }}</strong></div>
+      <div>Medium (0.6–0.9): <strong>{{ conf_bands.medium }}</strong></div>
+      <div>Low (&lt;0.6): <strong>{{ conf_bands.low }}</strong></div>
+    </div>
+  </div>
+  {% endif %}
+
+  <div class="metric">
+    <div class="metric-title">Confidence Histogram</div>
+    <div class="metric-value">
+      {% if confhist_img %}
+        <img class="conf-matrix" src="{{ url_for('static', filename=confhist_img) }}" alt="Confidence histogram">
+      {% else %}
+        <span class="muted">Not available (model without predict_proba).</span>
+      {% endif %}
+    </div>
+  </div>
+
+  <div class="metric">
+    <div class="metric-title">Class Mix (Pie)</div>
+    <div class="metric-value">
+      {% if dist_pie %}
+        <img class="conf-matrix" src="{{ url_for('static', filename=dist_pie) }}" alt="Predicted class pie">
+      {% else %}
+        <span class="muted">N/A</span>
+      {% endif %}
+    </div>
+  </div>
+</div>
+
+{% if validation_reports %}
+<hr>
+<h3>Validation Reports</h3>
+<ul class="list-unstyled">
+  {% for fname in validation_reports %}
+    <li>
+      <a href="{{ url_for('download_report', filename=fname) }}" target="_blank" rel="noopener">
+        {{ fname }}
+      </a>
+    </li>
+  {% endfor %}
+</ul>
+{% endif %}
+
+<div class="metric wide">
+  <div class="metric-title">Predicted Class Distribution</div>
+
+  {% set ns = namespace(total=0) %}
+  {% for _label, _count in (distribution or {}).items() %}
+    {% set ns.total = ns.total + (_count or 0) %}
+  {% endfor %}
+
+  {% if (distribution or {})|length == 0 %}
+    <p class="muted">No predictions to summarize.</p>
+  {% else %}
+    <div class="distribution">
+      {% for label, count in distribution.items() %}
+        {% set pct = ( (count or 0) / (ns.total if ns.total > 0 else 1) * 100 ) %}
+        <div class="dist-row">
+          <span class="label">{{ label }}</span>
+          <div class="bar">
+            <div class="fill" style="--pct: {{ pct|round(2) }};"></div>
+          </div>
+          <span class="count">{{ count }}</span>
+        </div>
+      {% endfor %}
+    </div>
+  {% endif %}
+</div>
+
+<a class="btn" href="{{ url_for('dashboard') }}">⬅ Back to Dashboard</a>
+{% endblock %}

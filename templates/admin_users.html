@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>User Approvals</h1>
+
+<table class="user-table">
+  <tr>
+    <th>Name</th><th>Email</th><th>Role</th><th>Approved</th><th>Registered</th><th>Actions</th>
+  </tr>
+  {% for u in users %}
+  <tr>
+    <td>{{ u.fullname }}</td>
+    <td>{{ u.email }}</td>
+    <td>{{ u.role }}</td>
+    <td>{{ 'Yes' if u.approved else 'No' }}</td>
+    <td>{{ u.registered_on.strftime('%Y-%m-%d %H:%M') }}</td>
+    <td>
+      {% if not u.approved %}
+        <a class="btn small" href="{{ url_for('approve', user_id=u.id) }}"><i class="fas fa-check"></i> Approve</a>
+        <a class="btn small danger" href="{{ url_for('reject', user_id=u.id) }}"><i class="fas fa-times"></i> Reject</a>
+      {% else %}
+        <a class="btn small danger" href="{{ url_for('reject', user_id=u.id) }}"><i class="fas fa-trash"></i> Delete</a>
+      {% endif %}
+    </td>
+  </tr>
+  {% endfor %}
+</table>
+
+<a class="btn" href="{{ url_for('dashboard') }}">⬅ Back to Dashboard</a>
+{% endblock %}

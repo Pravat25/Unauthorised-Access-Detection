@@ -1,0 +1,10 @@
+# bandit.yaml
+skips:
+  - B101   # assert used (common in tests)
+  - B603   # subprocess without shell (if you don't use it, remove)
+exclude_dirs:
+  - tests
+  - venv
+  - .venv
+severity: MEDIUM
+confidence: MEDIUM

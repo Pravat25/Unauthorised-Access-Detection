@@ -1,0 +1,162 @@
+{% extends "base.html" %}
+{% block content %}
+
+<!-- HERO (centered) -->
+<section class="home-hero home-hero--center-only-cta">
+  <div class="hero-inner hero-inner--center">
+    <h1 class="hero-title hero-title--xl">
+      CyberGuard
+      <span class="hero-gradient">Threat Detection Platform</span>
+    </h1>
+    <p class="hero-subtitle hero-subtitle--lg">
+      Train robust ML models and run high-signal threat detection on your data. Built for speed, clarity, and control — from superadmin approvals to streamlined detection workflows.
+    </p>
+
+    <div class="hero-ctas hero-ctas--center">
+      <a class="btn btn-cta btn-xxl" href="{{ url_for('register') }}">
+        <i class="fas fa-user-plus"></i> Create an Account
+      </a>
+      <a class="btn btn-xxl outline" href="{{ url_for('login') }}">
+        <i class="fas fa-sign-in-alt"></i> Sign In
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURE HIGHLIGHTS -->
+<section class="section">
+  <h2 class="section-title">Why Teams Choose CyberGuard</h2>
+  <div class="features-grid features-grid--big">
+    <div class="feature-card">
+      <i class="fas fa-user-shield feature-icon"></i>
+      <h3 class="feature-title">Superadmin Control</h3>
+      <p>One superadmin approves accounts; admins train models, users run detection. Clean roles and governance from day one.</p>
+    </div>
+    <div class="feature-card">
+      <i class="fas fa-robot feature-icon"></i>
+      <h3 class="feature-title">Multiple Algorithms</h3>
+      <p>Random Forest, SVM, MLP, Gradient Boosting — pick what fits your dataset. Swap and retrain in a click.</p>
+    </div>
+    <div class="feature-card">
+      <i class="fas fa-sliders-h feature-icon"></i>
+      <h3 class="feature-title">Smart Pre-processing</h3>
+      <p>Automatic one-hot encoding, missing value handling, and a balanced 10k stratified trim for fast, reliable training.</p>
+    </div>
+    <div class="feature-card">
+      <i class="fas fa-chart-pie feature-icon"></i>
+      <h3 class="feature-title">Actionable Reports</h3>
+      <p>Accuracy, confusion matrices, classification reports, and prediction distributions — export anytime.</p>
+    </div>
+  </div>
+</section>
+
+<!-- MODELS & CAPABILITIES -->
+<section class="section">
+  <h2 class="section-title">Models & Capabilities</h2>
+  <div class="capsule-row">
+    <span class="capsule">Random Forest</span>
+    <span class="capsule">SVM (RBF)</span>
+    <span class="capsule">Neural Network (MLP)</span>
+    <span class="capsule">Gradient Boosting</span>
+    <span class="capsule alt">One-hot Encoding</span>
+    <span class="capsule alt">Stratified Sampling</span>
+    <span class="capsule alt">Confusion Matrix</span>
+    <span class="capsule alt">Classification Report</span>
+  </div>
+  <p class="muted note-line">Admins can retrain models at any time; users see only trained models when running detection.</p>
+</section>
+
+<!-- WORKFLOW -->
+<section class="section">
+  <h2 class="section-title">How It Works</h2>
+  <div class="how-grid">
+    <div class="how-step">
+      <span class="step-badge">1</span>
+      <h4>Register</h4>
+      <p>Create your account; the superadmin approves access.</p>
+    </div>
+    <div class="how-step">
+      <span class="step-badge">2</span>
+      <h4>Train (Admins)</h4>
+      <p>Upload a labeled CSV, choose a model, and let CyberGuard prepare, split, and evaluate automatically.</p>
+    </div>
+    <div class="how-step">
+      <span class="step-badge">3</span>
+      <h4>Detect</h4>
+      <p>Upload data for prediction. With labels, get accuracy + matrix; without labels, get clean distributions and exports.</p>
+    </div>
+  </div>
+</section>
+
+<!-- GOVERNANCE & ROLES -->
+<section class="section">
+  <h2 class="section-title">Governance & Roles</h2>
+  <div class="roles-table-wrap">
+    <table class="roles-table">
+      <thead>
+        <tr>
+          <th>Role</th>
+          <th>Approve Users</th>
+          <th>Train Models</th>
+          <th>Run Detection</th>
+          <th>View Reports</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Superadmin</strong></td>
+          <td>✔</td>
+          <td>✔</td>
+          <td>✔</td>
+          <td>✔</td>
+        </tr>
+        <tr>
+          <td><strong>Admin</strong></td>
+          <td>—</td>
+          <td>✔</td>
+          <td>✔</td>
+          <td>✔</td>
+        </tr>
+        <tr>
+          <td><strong>User</strong></td>
+          <td>—</td>
+          <td>—</td>
+          <td>✔</td>
+          <td>✔</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- PRIVACY & SECURITY -->
+<section class="section">
+  <h2 class="section-title">Privacy & Security</h2>
+  <ul class="bullet-list">
+    <li><i class="fas fa-database"></i> Data stays within your environment; models and artifacts are stored locally.</li>
+    <li><i class="fas fa-user-lock"></i> Role-based access — superadmin approval required before any app access.</li>
+    <li><i class="fas fa-shield-alt"></i> Minimal metadata storage; upload paths are sanitized and validated.</li>
+    <li><i class="fas fa-file-export"></i> Export predictions and reports; delete models you no longer need.</li>
+  </ul>
+</section>
+
+<!-- FAQ -->
+<section class="section">
+  <h2 class="section-title">FAQ</h2>
+  <div class="faq">
+    <details>
+      <summary>What format should my CSV be in?</summary>
+      <p>Any tabular CSV works. Include a <code>label</code> or <code>target</code> column (or ensure the last column is the class) for full evaluation.</p>
+    </details>
+    <details>
+      <summary>How big can my dataset be?</summary>
+      <p>Training trims to 10,000 rows with stratified sampling for balanced, fast iterations. Detection accepts larger files but may take longer.</p>
+    </details>
+    <details>
+      <summary>Which models are supported?</summary>
+      <p>Random Forest, SVM (RBF), MLP, and Gradient Boosting out of the box, with consistent evaluation and reporting.</p>
+    </details>
+  </div>
+</section>
+
+{% endblock %}
