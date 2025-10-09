@@ -1,57 +1,44 @@
-﻿# Python
-__pycache__/
-*.py[cod]
-.venv/
-.eggs/
-*.egg-info/
-.python-version
-
-# Flask/DB
-site.db
-instance/
-
-# Caches & coverage
-.coverage
-.coverage.*
-htmlcov/
-.pytest_cache/
-.mypy_cache/
-.ruff_cache/
-.hypothesis/
-
-# Reports & artifacts (keep placeholders)
-reports/**
-!reports/.gitkeep
-static/img/**
-!static/img/.gitkeep
-static/reports/**
-!static/reports/.gitkeep
-models/**
-!models/.gitkeep
-
-# Security/audit outputs
-bandit-report.html
-bandit_report.html
-gitleaks-report.json
-pip-audit.json
-npm-audit.json
-zap report/
-
-# Node
-node_modules/
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-
-# Data (ignore big CSVs by default)
+# datasets & artifacts (do NOT commit)
+data/
+datasets/
+samples/
 *.csv
-!data/sample/*.csv
+*.tsv
+*.xlsx
+*.parquet
+*.pcap
+*.pkl
+*.joblib
+*.h5
+*.bin
 
-# Env files
+# models & local DBs
+models/*.pkl
+models/*.joblib
+*.db
+*.sqlite
+
+# archives
+*.zip
+*.tar
+*.gz
+*.7z
+
+# generated reports / coverage
+reports/
+htmlcov/
+coverage*.xml
+*.html
+*.json
+
+# node stuff
+node_modules/
+dist/
+
+# notebooks & env
+.ipynb_checkpoints/
 .env
-*.env
-.env.*.local
 
-# OS junk
+# OS/editor junk
 .DS_Store
 Thumbs.db
